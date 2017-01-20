@@ -3,7 +3,7 @@ import random
 import maya.cmds as cmds
 
 
-lightIntensity = 2
+lightIntensity = 4
 lightExporure = 4
 
 
@@ -34,35 +34,32 @@ lightEdgeShapeList = cmds.ls('*PxrEdgeSphereLight*',type= 'PxrSphereLight')   # 
 lightCubeShapeList =  cmds.ls('*PxrConstant*',type= 'PxrConstant')    
 edgeCubeShapeList = cmds.ls('PxrConstant34')
 
-'''
-for lightShape in lightShapeListy:
-    
-    choseColor = random.randrange(1,9,1)
-    print choseColor
-    pm.setAttr('%s.intensity'%lightShape,lightIntensity)  #set light intensity 
-    pm.setAttr('%s.exposure'%lightShape,lightExporure)  #set light exposure 
-   # print lightColorIndex[int(choseColor)]
-    
-   # print lightColorIndex[choseColor][0],lightColorIndex[choseColor][1],lightColorIndex[choseColor][2]
-    
-    
-    
-    print cmds.setAttr('%s.lightColor'%lightShape,lightColorIndex[choseColor][0],lightColorIndex[choseColor][1],lightColorIndex[choseColor][2],type='double3')
+
+
+## change Light Intensity and Expoure
+
+
+for lightShape in lightShapeList:
     
 
-for emitColor in lightCubeShapeList:
-    choseColor = random.randrange(1,9,1)   
-    cmds.setAttr('%s.emitColor'%emitColor,lightColorIndex[choseColor][0],lightColorIndex[choseColor][1],lightColorIndex[choseColor][2],type='double3')
+    pm.setAttr('%s.intensity'%lightShape,lightIntensity)  #set light intensity 
+    pm.setAttr('%s.exposure'%lightShape,lightExporure)  #set light exposure 
     
-    
-'''    
- 
+for lightColorE in lightEdgeShapeList:
+
+
+    pm.setAttr('%s.intensity'%lightColorE,lightIntensity)  #set light intensity 
+    pm.setAttr('%s.exposure'%lightColorE,lightExporure)  #set light exposure 
+
+
+
+
 #pm.select(lightShapeList)                
 
 
 startKeyFrame =  int( 120  )
 endKeyFrame=int( 400)
-stepByChangeColor =20
+stepByChangeColor =12
 keyFrameNums= []
 for num in range(startKeyFrame,endKeyFrame):
    # print num
@@ -76,6 +73,9 @@ pm.cutKey( lightCubeShapeList,at= 'emitColor',cl=True )
 pm.cutKey( edgeCubeShapeList,at= 'emitColor',cl=True )     
 pm.cutKey( lightShapeList,at= 'lightColor',cl=True )     
 pm.cutKey( lightEdgeShapeList,at= 'lightColor',cl=True )   
+
+
+## change the sphereLight Color ,one by one, frame by frame
 while frameNow < endKeyFrame :
     pm.currentTime (frameNow, e = True)
    # pm.setKeyframe(lightCubeShapeList,at= 'emitColor')
